@@ -2,33 +2,39 @@
 
 <?php while (have_posts()) : the_post(); ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <header class="mb-8">
-            <h1 class="text-3xl font-bold mb-4"><?php the_title(); ?></h1>
-            <div class="text-sm text-gray-500">
+        <header class="mb-16">
+            <h1 class="text-[2.8rem] font-bold leading-normal mb-6"><?php the_title(); ?></h1>
+            <div class="text-gray-light text-[1.6rem] flex items-center gap-3 flex-wrap">
                 <time datetime="<?php echo get_the_date('c'); ?>">
                     <?php echo get_the_date(); ?>
                 </time>
+                <?php if (has_category()) : ?>
+                    <span>·</span>
+                    <?php the_category(' · '); ?>
+                <?php endif; ?>
             </div>
         </header>
 
-        <div class="prose prose-gray max-w-none leading-relaxed">
+        <div class="prose-content">
             <?php the_content(); ?>
         </div>
 
-        <?php
-        wp_link_pages(array(
-            'before' => '<div class="mt-8 text-sm">' . __('Pages:', 'just-text'),
-            'after'  => '</div>',
-        ));
-        ?>
+        <?php if (has_tag()) : ?>
+            <div class="mt-16 pt-12 border-t border-line">
+                <div class="text-gray-light text-[1.6rem]">
+                    <span class="mr-2">标签：</span>
+                    <?php the_tags('', ' · ', ''); ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </article>
 
-    <nav class="mt-12 pt-8 border-t border-gray-200 flex justify-between text-sm">
-        <div>
-            <?php previous_post_link('%link', __('&larr; %title', 'just-text')); ?>
+    <nav class="mt-20 pt-16 border-t border-line flex justify-between text-[1.6rem]">
+        <div class="max-w-[45%]">
+            <?php previous_post_link('%link', '← %title', true); ?>
         </div>
-        <div>
-            <?php next_post_link('%link', __('%title &rarr;', 'just-text')); ?>
+        <div class="max-w-[45%] text-right">
+            <?php next_post_link('%link', '%title →', true); ?>
         </div>
     </nav>
 

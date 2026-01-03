@@ -1,45 +1,79 @@
 <?php get_header(); ?>
 
 <?php if (have_posts()) : ?>
-    <div class="space-y-12">
+    <div class="posts">
         <?php while (have_posts()) : the_post(); ?>
-            <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-[#d4cdb8] pb-12 last:border-0'); ?>>
-                <header class="mb-4">
-                    <h2 class="text-2xl font-bold mb-2">
-                        <a href="<?php the_permalink(); ?>" class="text-[#3d3d3d] hover:text-[#6b6b6b] transition-colors">
-                            <?php the_title(); ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-line pb-24 mb-24 last:border-0'); ?>>
+                <div class="<?php echo has_post_thumbnail() ? 'flex gap-8 items-start' : ''; ?>">
+                    <div class="<?php echo has_post_thumbnail() ? 'flex-1' : ''; ?>">
+                        <h2 class="text-[2.2rem] font-bold leading-normal mb-8">
+                            <?php if (is_sticky()) : ?>
+                                <span class="text-[1.6rem] text-gray-text mr-3">置顶</span>
+                            <?php endif; ?>
+                            <a href="<?php the_permalink(); ?>" class="text-ink hover:opacity-60 transition-all">
+                                <?php the_title(); ?>
+                            </a>
+                        </h2>
+
+                        <div class="post-info text-gray-light text-[1.6rem] mb-8 flex items-center gap-3 flex-wrap">
+                            <time datetime="<?php echo get_the_date('c'); ?>">
+                                <?php echo get_the_date(); ?>
+                            </time>
+                            <?php if (has_category()) : ?>
+                                <span>·</span>
+                                <span class="[&_a]:text-gray-light [&_a]:hover:text-ink [&_a]:transition-colors">
+                                    <?php the_category(' · '); ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php if (get_comments_number() > 0) : ?>
+                                <span>·</span>
+                                <a href="<?php comments_link(); ?>" class="text-gray-light hover:text-ink transition-colors">
+                                    <?php comments_number('0 评论', '1 评论', '% 评论'); ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="mb-8 leading-relaxed text-[1.8rem]">
+                            <?php the_excerpt(); ?>
+                        </div>
+
+                        <a href="<?php the_permalink(); ?>" class="text-gray-text text-[1.7rem] border-b border-transparent hover:border-gray-text transition-all inline-block">
+                            查看更多 →
                         </a>
-                    </h2>
-                    <div class="text-sm text-[#8b8b8b]">
-                        <time datetime="<?php echo get_the_date('c'); ?>">
-                            <?php echo get_the_date(); ?>
-                        </time>
                     </div>
-                </header>
 
-                <div class="prose prose-gray max-w-none">
-                    <?php the_excerpt(); ?>
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="flex-shrink-0 w-80">
+                            <a href="<?php the_permalink(); ?>" class="block overflow-hidden rounded-lg h-full">
+                                <?php the_post_thumbnail('large', array('class' => 'w-full h-full object-cover hover:opacity-90 transition-opacity')); ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
-
-                <a href="<?php the_permalink(); ?>" class="inline-block mt-4 text-sm text-[#6b6b6b] hover:text-[#3d3d3d] transition-colors">
-                    <?php _e('Read more &rarr;', 'just-text'); ?>
-                </a>
             </article>
         <?php endwhile; ?>
     </div>
 
-    <nav class="mt-12 flex justify-between text-sm">
+    <nav class="mt-20 flex justify-between text-[1.7rem]">
         <div>
-            <?php previous_posts_link(__('&larr; Newer posts', 'just-text')); ?>
+            <?php if (get_previous_posts_link()) : ?>
+                <a href="<?php echo get_previous_posts_page_link(); ?>" class="text-gray-text border-b border-transparent hover:text-ink hover:border-ink transition-all">
+                    ← 较新的文章
+                </a>
+            <?php endif; ?>
         </div>
         <div>
-            <?php next_posts_link(__('Older posts &rarr;', 'just-text')); ?>
+            <?php if (get_next_posts_link()) : ?>
+                <a href="<?php echo get_next_posts_page_link(); ?>" class="text-gray-text border-b border-transparent hover:text-ink hover:border-ink transition-all">
+                    较旧的文章 →
+                </a>
+            <?php endif; ?>
         </div>
     </nav>
 
 <?php else : ?>
-    <div class="text-center py-12">
-        <p class="text-[#6b6b6b]"><?php _e('No posts found.', 'just-text'); ?></p>
+    <div class="text-center text-gray-text py-16">
+        <p>暂无文章。</p>
     </div>
 <?php endif; ?>
 
