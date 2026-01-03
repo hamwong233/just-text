@@ -78,3 +78,10 @@ function just_text_nav_menu_item($item_output, $item, $depth, $args) {
     return $item_output;
 }
 add_filter('walker_nav_menu_start_el', 'just_text_nav_menu_item', 10, 4);
+
+function just_text_remove_block_comments($content) {
+    $content = preg_replace('/<!--\s*wp:.*?-->/s', '', $content);
+    $content = preg_replace('/<!--\s*\/wp:.*?-->/s', '', $content);
+    return $content;
+}
+add_filter('the_content', 'just_text_remove_block_comments', 9);

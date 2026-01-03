@@ -51,6 +51,10 @@
             @apply leading-relaxed mb-6;
         }
 
+        .prose-content > p:empty {
+            display: none;
+        }
+
         .prose-content h1,
         .prose-content h2,
         .prose-content h3,
@@ -175,12 +179,21 @@
             letter-spacing: 0.02em;
         }
 
-        .prose-content .wp-block-image {
-            @apply my-8;
+        .prose-content .wp-block-heading:first-child {
+            margin-top: 0;
         }
 
-        .prose-content .wp-block-image img {
-            @apply w-full h-auto rounded-lg;
+        .prose-content figure.wp-block-image {
+            @apply my-8 mx-0;
+        }
+
+        .prose-content figure.wp-block-image img {
+            @apply w-full h-auto rounded-lg block;
+        }
+
+        .prose-content figure.wp-block-image.size-full img,
+        .prose-content figure.wp-block-image.size-large img {
+            @apply max-w-full;
         }
 
         .prose-content .wp-block-image figcaption {
