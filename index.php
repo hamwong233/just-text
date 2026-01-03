@@ -3,14 +3,14 @@
 <?php if (have_posts()) : ?>
     <div class="space-y-12">
         <?php while (have_posts()) : the_post(); ?>
-            <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-gray-200 pb-12 last:border-0'); ?>>
+            <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-[#d4cdb8] pb-12 last:border-0'); ?>>
                 <header class="mb-4">
                     <h2 class="text-2xl font-bold mb-2">
-                        <a href="<?php the_permalink(); ?>" class="text-gray-900 hover:text-gray-600 transition-colors">
+                        <a href="<?php the_permalink(); ?>" class="text-[#3d3d3d] hover:text-[#6b6b6b] transition-colors">
                             <?php the_title(); ?>
                         </a>
                     </h2>
-                    <div class="text-sm text-gray-500">
+                    <div class="text-sm text-[#8b8b8b]">
                         <time datetime="<?php echo get_the_date('c'); ?>">
                             <?php echo get_the_date(); ?>
                         </time>
@@ -21,7 +21,7 @@
                     <?php the_excerpt(); ?>
                 </div>
 
-                <a href="<?php the_permalink(); ?>" class="inline-block mt-4 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="<?php the_permalink(); ?>" class="inline-block mt-4 text-sm text-[#6b6b6b] hover:text-[#3d3d3d] transition-colors">
                     <?php _e('Read more &rarr;', 'just-text'); ?>
                 </a>
             </article>
@@ -39,7 +39,7 @@
 
 <?php else : ?>
     <div class="text-center py-12">
-        <p class="text-gray-600"><?php _e('No posts found.', 'just-text'); ?></p>
+        <p class="text-[#6b6b6b]"><?php _e('No posts found.', 'just-text'); ?></p>
     </div>
 <?php endif; ?>
 
