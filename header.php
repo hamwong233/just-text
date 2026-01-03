@@ -3,6 +3,68 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply leading-relaxed;
+            }
+        }
+        @layer components {
+            .prose {
+                @apply text-gray-700 leading-7;
+            }
+            .prose p {
+                @apply mb-4;
+            }
+            .prose h1, .prose h2, .prose h3 {
+                @apply font-bold text-gray-900 mt-6 mb-3;
+            }
+            .prose h1 {
+                @apply text-3xl;
+            }
+            .prose h2 {
+                @apply text-2xl;
+            }
+            .prose h3 {
+                @apply text-xl;
+            }
+            .prose a {
+                @apply text-gray-900 underline hover:text-gray-600;
+            }
+            .prose ul, .prose ol {
+                @apply mb-4 ml-6;
+            }
+            .prose ul {
+                @apply list-disc;
+            }
+            .prose ol {
+                @apply list-decimal;
+            }
+            .prose li {
+                @apply mb-2;
+            }
+            .prose blockquote {
+                @apply border-l-4 border-gray-300 pl-4 italic my-4;
+            }
+            .prose code {
+                @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
+            }
+            .prose pre {
+                @apply bg-gray-100 p-4 rounded overflow-x-auto mb-4;
+            }
+            .prose img {
+                @apply my-4 rounded;
+            }
+        }
+    </style>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class('bg-white text-gray-900'); ?>>

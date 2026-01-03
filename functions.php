@@ -18,11 +18,6 @@ function just_text_setup() {
 }
 add_action('after_setup_theme', 'just_text_setup');
 
-function just_text_scripts() {
-    wp_enqueue_style('just-text-style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0.0');
-}
-add_action('wp_enqueue_scripts', 'just_text_scripts');
-
 function just_text_excerpt_length($length) {
     return 40;
 }
