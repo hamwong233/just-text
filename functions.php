@@ -129,6 +129,12 @@ function just_text_add_lazy_loading($content) {
 add_filter('the_content', 'just_text_add_lazy_loading', 20);
 add_filter('post_thumbnail_html', 'just_text_add_lazy_loading', 20);
 
+function just_text_gravatar_cn($avatar) {
+    $avatar = str_replace(array('www.gravatar.com', '0.gravatar.com', '1.gravatar.com', '2.gravatar.com', 'secure.gravatar.com'), 'cravatar.cn', $avatar);
+    return $avatar;
+}
+add_filter('get_avatar', 'just_text_gravatar_cn');
+
 function just_text_pagination() {
     global $wp_query;
 
@@ -161,20 +167,31 @@ function just_text_pagination() {
 }
 
 function just_text_comment($comment, $args, $depth) {
+    $parent_id = $comment->comment_parent;
+    $parent_author = '';
+    if ($parent_id && $depth > 1) {
+        $parent_comment = get_comment($parent_id);
+        if ($parent_comment) {
+            $parent_author = $parent_comment->comment_author;
+        }
+    }
     ?>
-    <li <?php comment_class('mb-8 pb-8 border-b border-line last:border-0'); ?> id="comment-<?php comment_ID(); ?>">
-        <article class="flex gap-4">
+    <li <?php comment_class('mb-8 pb-8 border-b border-line last:border-0' . ($depth > 1 ? ' ml-8 md:ml-12 pl-4 md:pl-6 border-l-2 border-l-line' : '')); ?> id="comment-<?php comment_ID(); ?>">
+        <article class="flex gap-3 md:gap-4">
             <div class="flex-shrink-0">
-                <?php echo get_avatar($comment, 48, '', '', array('class' => 'rounded-full')); ?>
+                <?php echo get_avatar($comment, $depth > 1 ? 40 : 48, '', '', array('class' => 'rounded-full')); ?>
             </div>
             <div class="flex-1 min-w-0">
-                <div class="mb-3">
+                <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                     <span class="font-bold text-[1.6rem]"><?php echo get_comment_author_link(); ?></span>
-                    <time class="text-gray-light text-[1.4rem] ml-3" datetime="<?php comment_time('c'); ?>">
+                    <?php if ($parent_author) : ?>
+                        <span class="text-gray-light text-[1.4rem]">回复 <span class="text-ink"><?php echo esc_html($parent_author); ?></span></span>
+                    <?php endif; ?>
+                    <time class="text-gray-light text-[1.3rem]" datetime="<?php comment_time('c'); ?>">
                         <?php comment_date('Y-m-d'); ?> <?php comment_time('H:i'); ?>
                     </time>
                 </div>
-                <div class="text-[1.6rem] leading-relaxed mb-3">
+                <div class="text-[1.6rem] leading-relaxed mb-3 break-words">
                     <?php comment_text(); ?>
                 </div>
                 <?php
@@ -182,7 +199,7 @@ function just_text_comment($comment, $args, $depth) {
                     'depth' => $depth,
                     'max_depth' => $args['max_depth'],
                     'reply_text' => '回复',
-                    'before' => '<div class="text-[1.5rem]">',
+                    'before' => '<div class="text-[1.4rem] text-gray-text hover:text-ink transition-colors mb-4">',
                     'after' => '</div>',
                 )));
                 ?>

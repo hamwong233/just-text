@@ -24,6 +24,7 @@ if (post_password_required()) {
                 'short_ping' => true,
                 'avatar_size' => 48,
                 'callback' => 'just_text_comment',
+                'max_depth' => 2,
             ));
             ?>
         </ol>
