@@ -56,7 +56,7 @@ get_header(); ?>
                     <?php foreach ($categories as $category) : ?>
                         <a href="<?php echo get_category_link($category->term_id); ?>"
                            class="block p-6 border border-divider hover:border-primary transition-all group">
-                            <h3 class="text-[2rem] font-bold mb-3 group-hover:opacity-60 transition-opacity">
+                            <h3 class="text-[2rem] font-bold mb-3 group-hover:opacity-60 transition-opacity truncate">
                                 <?php echo esc_html($category->name); ?>
                             </h3>
                             <div class="text-muted text-[1.5rem]">

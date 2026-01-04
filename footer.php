@@ -1,6 +1,6 @@
 </main>
 
-<div class="max-w-6xl mx-auto text-center mb-8">
+<div class="max-w-6xl mx-auto mb-8">
     <a href="#" id="back-to-top" class="text-secondary text-[1.6rem] border-b border-transparent hover:text-primary hover:border-primary transition-all inline-block">
         ↑ 回到顶部
     </a>

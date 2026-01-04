@@ -58,7 +58,7 @@
         <div class="md:max-w-[45%]">
             <?php previous_post_link('%link', '← %title', true); ?>
         </div>
-        <div class="md:max-w-[45%] md:text-right">
+        <div class="md:max-w-[45%] text-right">
             <?php next_post_link('%link', '%title →', true); ?>
         </div>
     </nav>
