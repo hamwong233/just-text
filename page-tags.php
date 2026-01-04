@@ -26,13 +26,40 @@ get_header(); ?>
             <?php endif; ?>
         </header>
 
+        <div class="letter-filter mb-12">
+            <div class="flex flex-wrap gap-3">
+                <?php
+                $letters = range('A', 'Z');
+                $current_letter = isset($_GET['letter']) ? strtoupper($_GET['letter']) : '';
+                foreach ($letters as $letter) :
+                    $is_active = ($current_letter === $letter);
+                    $class = $is_active
+                        ? 'px-4 py-2 text-[1.5rem] bg-primary text-white transition-all'
+                        : 'px-4 py-2 text-[1.5rem] border border-divider hover:border-primary transition-all';
+                    $url = $is_active ? remove_query_arg('letter') : add_query_arg('letter', $letter);
+                    ?>
+                    <a href="<?php echo esc_url($url); ?>" class="<?php echo $class; ?>">
+                        <?php echo $letter; ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
         <div class="tags-overview">
             <?php
+            $letter_filter = isset($_GET['letter']) ? strtoupper($_GET['letter']) : '';
+
             $tags = get_tags(array(
                 'orderby' => 'count',
                 'order' => 'DESC',
                 'hide_empty' => true,
             ));
+
+            if ($letter_filter) {
+                $tags = array_filter($tags, function($tag) use ($letter_filter) {
+                    return just_text_term_initial($tag->name) === $letter_filter;
+                });
+            }
 
             if ($tags) :
                 ?>
@@ -55,7 +82,7 @@ get_header(); ?>
                     <?php endforeach; ?>
                 </div>
             <?php else : ?>
-                <p class="text-secondary text-[1.6rem]">暂无标签。</p>
+                <p class="text-secondary text-[1.6rem] text-center">暂无标签。</p>
             <?php endif; ?>
         </div>
     </article>

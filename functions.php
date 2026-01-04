@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * 主题初始化设置
+ */
 function just_text_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -18,13 +21,27 @@ function just_text_setup() {
 }
 add_action('after_setup_theme', 'just_text_setup');
 
+/**
+ * 自定义摘要长度
+ *
+ * @param int $length 默认摘要长度
+ * @return int 返回 80 个字符
+ */
 function just_text_excerpt_length($length) {
     return 80;
 }
 add_filter('excerpt_length', 'just_text_excerpt_length');
 
+/**
+ * 隐藏前台管理工具栏
+ */
 add_filter('show_admin_bar', '__return_false');
 
+/**
+ * 主题自定义设置
+ *
+ * @param WP_Customize_Manager $wp_customize 自定义管理器实例
+ */
 function just_text_customize_register($wp_customize) {
     $wp_customize->add_section('just_text_settings', array(
         'title' => '主题设置',
@@ -74,6 +91,12 @@ function just_text_customize_register($wp_customize) {
 }
 add_action('customize_register', 'just_text_customize_register');
 
+/**
+ * 自定义 JS 代码安全过滤
+ *
+ * @param string $input 输入的 JS 代码
+ * @return string 过滤后的代码
+ */
 function just_text_sanitize_js($input) {
     if (current_user_can('unfiltered_html')) {
         return $input;
@@ -81,6 +104,15 @@ function just_text_sanitize_js($input) {
     return wp_kses_post($input);
 }
 
+/**
+ * 自定义导航菜单 CSS 类
+ *
+ * @param array $classes CSS 类数组
+ * @param object $item 菜单项对象
+ * @param object $args 菜单参数
+ * @param int $depth 菜单深度
+ * @return array 处理后的 CSS 类数组
+ */
 function just_text_nav_menu_css_class($classes, $item, $args, $depth) {
     if ($args->theme_location == 'primary') {
         $classes = array();
@@ -92,6 +124,15 @@ function just_text_nav_menu_css_class($classes, $item, $args, $depth) {
 }
 add_filter('nav_menu_css_class', 'just_text_nav_menu_css_class', 10, 4);
 
+/**
+ * 自定义导航菜单链接属性
+ *
+ * @param array $atts 链接属性数组
+ * @param object $item 菜单项对象
+ * @param object $args 菜单参数
+ * @param int $depth 菜单深度
+ * @return array 处理后的链接属性数组
+ */
 function just_text_nav_menu_link_attributes($atts, $item, $args, $depth) {
     if ($args->theme_location == 'primary') {
         $classes = 'text-secondary hover:text-primary transition-colors border-b border-transparent hover:border-primary';
@@ -104,6 +145,15 @@ function just_text_nav_menu_link_attributes($atts, $item, $args, $depth) {
 }
 add_filter('nav_menu_link_attributes', 'just_text_nav_menu_link_attributes', 10, 4);
 
+/**
+ * 在导航菜单项之间添加分隔符
+ *
+ * @param string $item_output 菜单项 HTML 输出
+ * @param object $item 菜单项对象
+ * @param int $depth 菜单深度
+ * @param object $args 菜单参数
+ * @return string 处理后的菜单项 HTML
+ */
 function just_text_nav_menu_item($item_output, $item, $depth, $args) {
     if ($args->theme_location == 'primary' && $depth === 0) {
         static $item_count = 0;
@@ -117,6 +167,12 @@ function just_text_nav_menu_item($item_output, $item, $depth, $args) {
 }
 add_filter('walker_nav_menu_start_el', 'just_text_nav_menu_item', 10, 4);
 
+/**
+ * 移除文章内容中的区块编辑器注释
+ *
+ * @param string $content 文章内容
+ * @return string 处理后的内容
+ */
 function just_text_remove_block_comments($content) {
     $content = preg_replace('/<!--\s*wp:.*?-->/s', '', $content);
     $content = preg_replace('/<!--\s*\/wp:.*?-->/s', '', $content);
@@ -124,6 +180,11 @@ function just_text_remove_block_comments($content) {
 }
 add_filter('the_content', 'just_text_remove_block_comments', 9);
 
+/**
+ * 计算文章阅读时间
+ *
+ * @return int 阅读时间（分钟）
+ */
 function just_text_reading_time() {
     $content = get_post_field('post_content', get_the_ID());
     $word_count = mb_strlen(strip_tags($content), 'UTF-8');
@@ -131,11 +192,23 @@ function just_text_reading_time() {
     return max(1, $reading_time);
 }
 
+/**
+ * 移除缩略图尺寸属性
+ *
+ * @param string $html 缩略图 HTML
+ * @return string 处理后的 HTML
+ */
 function just_text_remove_thumbnail_dimensions($html) {
     return preg_replace('/(width|height)="\d*"\s/', '', $html);
 }
 add_filter('post_thumbnail_html', 'just_text_remove_thumbnail_dimensions', 10);
 
+/**
+ * 为图片添加懒加载属性
+ *
+ * @param string $content 内容 HTML
+ * @return string 处理后的 HTML
+ */
 function just_text_add_lazy_loading($content) {
     if (is_feed() || is_admin()) {
         return $content;
@@ -146,12 +219,21 @@ function just_text_add_lazy_loading($content) {
 add_filter('the_content', 'just_text_add_lazy_loading', 20);
 add_filter('post_thumbnail_html', 'just_text_add_lazy_loading', 20);
 
+/**
+ * 替换 Gravatar 头像为国内镜像
+ *
+ * @param string $avatar 头像 HTML
+ * @return string 处理后的头像 HTML
+ */
 function just_text_gravatar_cn($avatar) {
     $avatar = str_replace(array('www.gravatar.com', '0.gravatar.com', '1.gravatar.com', '2.gravatar.com', 'secure.gravatar.com'), 'cravatar.cn', $avatar);
     return $avatar;
 }
 add_filter('get_avatar', 'just_text_gravatar_cn');
 
+/**
+ * 输出分页导航
+ */
 function just_text_pagination() {
     global $wp_query;
 
@@ -183,6 +265,13 @@ function just_text_pagination() {
     echo '</nav>';
 }
 
+/**
+ * 自定义评论模板
+ *
+ * @param object $comment 评论对象
+ * @param array $args 评论参数
+ * @param int $depth 评论嵌套深度
+ */
 function just_text_comment($comment, $args, $depth) {
     $parent_id = $comment->comment_parent;
     $parent_author = '';
@@ -225,6 +314,9 @@ function just_text_comment($comment, $args, $depth) {
     <?php
 }
 
+/**
+ * 输出文章卡片
+ */
 function just_text_post_card() {
     ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-divider pb-24 mb-24 last:border-0'); ?>>
@@ -292,3 +384,66 @@ function just_text_post_card() {
     </article>
     <?php
 }
+
+/**
+ * 获取字符串首字母（支持中英文）
+ *
+ * @param string $str 输入字符串
+ * @return string 返回大写首字母（A-Z），中文返回拼音首字母
+ */
+function just_text_term_initial($str) {
+    $str = trim($str);
+    if ($str === '') return '';
+
+    $firstChar = mb_substr($str, 0, 1, 'UTF-8');
+
+    // 英文字母直接返回大写
+    if (preg_match('/[A-Za-z]/', $firstChar)) {
+        return strtoupper($firstChar);
+    }
+
+    // 转换为 GB2312 编码以获取汉字 ASCII 码
+    $s = iconv('UTF-8', 'GB2312//IGNORE', $firstChar);
+    $s2 = iconv('GB2312', 'UTF-8//IGNORE', $s);
+    $s = $s2 === $firstChar ? $s : $firstChar;
+
+    // 计算汉字 GB2312 编码的 ASCII 值
+    $asc = ord($s[0]) * 256 + ord($s[1]) - 65536;
+
+    // GB2312 汉字拼音首字母 ASCII 码范围映射表
+    $ranges = [
+        'A' => [-20319, -20284],
+        'B' => [-20283, -19776],
+        'C' => [-19775, -19219],
+        'D' => [-19218, -18711],
+        'E' => [-18710, -18527],
+        'F' => [-18526, -18240],
+        'G' => [-18239, -17923],
+        'H' => [-17922, -17418],
+        'J' => [-17417, -16475],
+        'K' => [-16474, -16213],
+        'L' => [-16212, -15641],
+        'M' => [-15640, -15166],
+        'N' => [-15165, -14923],
+        'O' => [-14922, -14915],
+        'P' => [-14914, -14631],
+        'Q' => [-14630, -14150],
+        'R' => [-14149, -14091],
+        'S' => [-14090, -13319],
+        'T' => [-13318, -12839],
+        'W' => [-12838, -12557],
+        'X' => [-12556, -11848],
+        'Y' => [-11847, -11056],
+        'Z' => [-11055, -10247],
+    ];
+
+    // 匹配对应的拼音首字母
+    foreach ($ranges as $letter => [$start, $end]) {
+        if ($asc >= $start && $asc <= $end) {
+            return $letter;
+        }
+    }
+
+    return '';
+}
+
