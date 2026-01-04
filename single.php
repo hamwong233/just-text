@@ -4,7 +4,7 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
         <header class="mb-16">
             <h1 class="text-[2.8rem] font-bold leading-normal mb-6"><?php the_title(); ?></h1>
-            <div class="text-gray-light text-[1.6rem] flex items-center gap-3 flex-wrap mb-4">
+            <div class="text-muted text-[1.6rem] flex items-center gap-3 flex-wrap mb-4">
                 <time datetime="<?php echo get_the_date('c'); ?>">
                     <?php echo get_the_date(); ?>
                 </time>
@@ -13,7 +13,7 @@
                     <?php the_category(' · '); ?>
                 <?php endif; ?>
             </div>
-            <div class="text-gray-light text-[1.5rem]">
+            <div class="text-muted text-[1.5rem]">
                 <?php
                 $content = get_post_field('post_content', get_the_ID());
                 $word_count = mb_strlen(strip_tags($content), 'UTF-8');
@@ -28,9 +28,9 @@
             the_content();
 
             wp_link_pages(array(
-                'before' => '<nav class="mt-12 pt-8 border-t border-line"><div class="text-[1.6rem] text-gray-text mb-4">文章分页：</div><div class="flex flex-wrap gap-3">',
+                'before' => '<nav class="mt-12 pt-8 border-t border-divider"><div class="text-[1.6rem] text-secondary mb-4">文章分页：</div><div class="flex flex-wrap gap-3">',
                 'after' => '</div></nav>',
-                'link_before' => '<span class="inline-block px-4 py-2 border border-line hover:border-ink transition-colors">',
+                'link_before' => '<span class="inline-block px-4 py-2 border border-divider hover:border-primary transition-colors">',
                 'link_after' => '</span>',
                 'next_or_number' => 'number',
                 'separator' => '',
@@ -39,8 +39,8 @@
         </div>
 
         <?php if (has_tag()) : ?>
-            <div class="mt-16 pt-12 border-t border-line">
-                <div class="text-gray-light text-[1.6rem]">
+            <div class="mt-16 pt-12 border-t border-divider">
+                <div class="text-muted text-[1.6rem]">
                     <span class="mr-2">标签：</span>
                     <?php the_tags('', ' · ', ''); ?>
                 </div>
@@ -54,7 +54,7 @@
         ?>
     </article>
 
-    <nav class="mt-20 pt-16 border-t border-line flex flex-col md:flex-row md:justify-between gap-4 text-[1.6rem]">
+    <nav class="mt-20 pt-16 border-t border-divider flex flex-col md:flex-row md:justify-between gap-4 text-[1.6rem]">
         <div class="md:max-w-[45%]">
             <?php previous_post_link('%link', '← %title', true); ?>
         </div>

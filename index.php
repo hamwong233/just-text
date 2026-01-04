@@ -10,7 +10,7 @@
     <?php just_text_pagination(); ?>
 
 <?php else : ?>
-    <div class="text-center text-gray-text py-16">
+    <div class="text-center text-secondary py-16">
         <p>暂无文章。</p>
     </div>
 <?php endif; ?>

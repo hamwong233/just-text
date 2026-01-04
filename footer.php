@@ -1,18 +1,18 @@
 </main>
 
 <div class="max-w-6xl mx-auto text-center mb-8">
-    <a href="#" id="back-to-top" class="text-gray-text text-[1.6rem] border-b border-transparent hover:text-ink hover:border-ink transition-all inline-block">
+    <a href="#" id="back-to-top" class="text-secondary text-[1.6rem] border-b border-transparent hover:text-primary hover:border-primary transition-all inline-block">
         ↑ 回到顶部
     </a>
 </div>
 
-<footer class="max-w-6xl mx-auto mt-16 pt-16 border-t border-line text-center text-gray-text text-[1.5rem] leading-normal">
+<footer class="max-w-6xl mx-auto mt-16 pt-16 border-t border-divider text-center text-secondary text-[1.5rem] leading-normal">
     <p class="mb-2">&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. 保留所有权利。</p>
     <?php
     $icp_number = get_theme_mod('icp_filing_number');
     if ($icp_number) : ?>
         <p>
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="border-b border-transparent hover:border-gray-text transition-colors">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="border-b border-transparent hover:border-secondary transition-colors">
                 <?php echo esc_html($icp_number); ?>
             </a>
         </p>

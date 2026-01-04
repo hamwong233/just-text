@@ -10,11 +10,11 @@
             theme: {
                 extend: {
                     colors: {
-                        'paper': '#FAF8F1',
-                        'ink': '#161616',
-                        'gray-text': '#888',
-                        'gray-light': '#aaa',
-                        'line': '#eee',
+                        'surface': '#FAF8F1',
+                        'primary': '#161616',
+                        'secondary': '#888',
+                        'muted': '#aaa',
+                        'divider': '#eee',
                     },
                     fontSize: {
                         'base': '1.7rem',
@@ -24,6 +24,14 @@
         }
     </script>
     <style>
+        :root {
+            --surface: #FAF8F1;
+            --primary: #161616;
+            --secondary: #888;
+            --muted: #aaa;
+            --divider: #eee;
+        }
+
         html {
             font-size: 62.5%;
             scroll-behavior: smooth;
@@ -37,7 +45,7 @@
 
         ::selection {
             background: #ffecaa;
-            color: #161616;
+            color: var(--primary);
         }
 
         .prose-content > *:first-child {
@@ -180,7 +188,7 @@
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             font-size: 1.4rem;
-            border: 1px solid rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--divider);
             font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
         }
 
@@ -231,7 +239,7 @@
 
         .prose-content figure figcaption,
         .prose-content .wp-block-image figcaption {
-            color: #aaa;
+            color: var(--muted);
             font-size: 1.5rem;
             text-align: center;
             margin-top: 0.75rem;
@@ -247,7 +255,6 @@
 
         .prose-content .wp-block-code {
             background-color: #222;
-            color: #ffecaa;
             font-size: 1.5rem;
             margin: 2rem 0;
             padding: 1.5rem;
@@ -285,7 +292,7 @@
 
         .prose-content hr {
             border: 0;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--divider);
             margin: 3rem 0;
         }
 
@@ -319,8 +326,8 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffecaa;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: var(--surface);
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 0.4rem 0.8rem;
             border-radius: 0.25rem;
@@ -331,7 +338,7 @@
         }
 
         .code-copy-btn:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .code-copy-btn.copied {
@@ -362,7 +369,7 @@
         }
 
         .prose-content figcaption {
-            color: #aaa;
+            color: var(--muted);
             font-size: 1.5rem;
             text-align: center;
             margin-top: 0.75rem;
@@ -376,7 +383,7 @@
 
         .prose-content th,
         .prose-content td {
-            border: 1px solid #eee;
+            border: 1px solid var(--divider);
             padding: 0.75rem 1rem;
             text-align: left;
         }
@@ -398,7 +405,7 @@
     ?>
     <?php wp_head(); ?>
 </head>
-<body class="bg-paper text-ink leading-relaxed tracking-wide p-5" style="font-size: 1.7rem; line-height: 1.85; letter-spacing: 0.02em;">
+<body class="bg-surface text-primary leading-relaxed tracking-wide p-5" style="font-size: 1.7rem; line-height: 1.85; letter-spacing: 0.02em;">
 <?php wp_body_open(); ?>
 
 <?php if (has_nav_menu('primary')) : ?>
@@ -417,14 +424,14 @@
 <?php if (is_home() || is_front_page()) : ?>
 <header class="max-w-6xl mx-auto mb-20">
     <h1 class="text-[2.4rem] md:text-[2.8rem] font-bold leading-normal mb-3">
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="text-ink hover:opacity-60 transition-all">
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="text-primary hover:opacity-60 transition-all">
             <?php bloginfo('name'); ?>
         </a>
     </h1>
     <?php
     $description = get_bloginfo('description', 'display');
     if ($description || is_customize_preview()) : ?>
-        <p class="text-gray-text text-[1.6rem] leading-normal mt-2"><?php echo $description; ?></p>
+        <p class="text-secondary text-[1.6rem] leading-normal mt-2"><?php echo $description; ?></p>
     <?php endif; ?>
 </header>
 <?php endif; ?>

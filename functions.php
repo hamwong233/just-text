@@ -77,9 +77,9 @@ add_filter('nav_menu_css_class', 'just_text_nav_menu_css_class', 10, 4);
 
 function just_text_nav_menu_link_attributes($atts, $item, $args, $depth) {
     if ($args->theme_location == 'primary') {
-        $classes = 'text-gray-text hover:text-ink transition-colors border-b border-transparent hover:border-ink';
+        $classes = 'text-secondary hover:text-primary transition-colors border-b border-transparent hover:border-primary';
         if ($item->current) {
-            $classes = 'text-ink font-bold';
+            $classes = 'text-primary font-bold';
         }
         $atts['class'] = $classes;
     }
@@ -93,7 +93,7 @@ function just_text_nav_menu_item($item_output, $item, $depth, $args) {
         $item_count++;
 
         if ($item_count > 1) {
-            $item_output = '<span class="text-gray-light mx-3">｜</span>' . $item_output;
+            $item_output = '<span class="text-muted mx-3">｜</span>' . $item_output;
         }
     }
     return $item_output;
@@ -148,19 +148,19 @@ function just_text_pagination() {
     echo '<nav class="mt-20 flex justify-center items-center gap-2 text-[1.6rem]">';
 
     if ($paged > 1) {
-        echo '<a href="' . get_pagenum_link($paged - 1) . '" class="w-12 h-12 flex items-center justify-center text-gray-text hover:text-ink transition-colors border border-line hover:border-ink">←</a>';
+        echo '<a href="' . get_pagenum_link($paged - 1) . '" class="w-12 h-12 flex items-center justify-center text-secondary hover:text-primary transition-colors border border-divider hover:border-primary">←</a>';
     }
 
     for ($i = 1; $i <= $max; $i++) {
         if ($i == $paged) {
-            echo '<span class="w-12 h-12 flex items-center justify-center bg-ink text-paper">' . $i . '</span>';
+            echo '<span class="w-12 h-12 flex items-center justify-center bg-primary text-surface">' . $i . '</span>';
         } else {
-            echo '<a href="' . get_pagenum_link($i) . '" class="w-12 h-12 flex items-center justify-center text-gray-text hover:text-ink border border-line hover:border-ink transition-all">' . $i . '</a>';
+            echo '<a href="' . get_pagenum_link($i) . '" class="w-12 h-12 flex items-center justify-center text-secondary hover:text-primary border border-divider hover:border-primary transition-all">' . $i . '</a>';
         }
     }
 
     if ($paged < $max) {
-        echo '<a href="' . get_pagenum_link($paged + 1) . '" class="w-12 h-12 flex items-center justify-center text-gray-text hover:text-ink transition-colors border border-line hover:border-ink">→</a>';
+        echo '<a href="' . get_pagenum_link($paged + 1) . '" class="w-12 h-12 flex items-center justify-center text-secondary hover:text-primary transition-colors border border-divider hover:border-primary">→</a>';
     }
 
     echo '</nav>';
@@ -176,7 +176,7 @@ function just_text_comment($comment, $args, $depth) {
         }
     }
     ?>
-    <li <?php comment_class('mb-8 pb-8 border-b border-line last:border-0' . ($depth > 1 ? ' ml-8 md:ml-12 pl-4 md:pl-6 border-l-2 border-l-line' : '')); ?> id="comment-<?php comment_ID(); ?>">
+    <li <?php comment_class('mb-8 pb-8 border-b border-divider last:border-0' . ($depth > 1 ? ' ml-8 md:ml-12 pl-4 md:pl-6 border-l-2 border-l-divider' : '')); ?> id="comment-<?php comment_ID(); ?>">
         <article class="flex gap-3 md:gap-4">
             <div class="flex-shrink-0">
                 <?php echo get_avatar($comment, $depth > 1 ? 40 : 48, '', '', array('class' => 'rounded-full')); ?>
@@ -185,9 +185,9 @@ function just_text_comment($comment, $args, $depth) {
                 <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                     <span class="font-bold text-[1.6rem]"><?php echo get_comment_author_link(); ?></span>
                     <?php if ($parent_author) : ?>
-                        <span class="text-gray-light text-[1.4rem]">回复 <span class="text-ink"><?php echo esc_html($parent_author); ?></span></span>
+                        <span class="text-muted text-[1.4rem]">回复 <span class="text-primary"><?php echo esc_html($parent_author); ?></span></span>
                     <?php endif; ?>
-                    <time class="text-gray-light text-[1.3rem]" datetime="<?php comment_time('c'); ?>">
+                    <time class="text-muted text-[1.3rem]" datetime="<?php comment_time('c'); ?>">
                         <?php comment_date('Y-m-d'); ?> <?php comment_time('H:i'); ?>
                     </time>
                 </div>
@@ -199,7 +199,7 @@ function just_text_comment($comment, $args, $depth) {
                     'depth' => $depth,
                     'max_depth' => $args['max_depth'],
                     'reply_text' => '回复',
-                    'before' => '<div class="text-[1.4rem] text-gray-text hover:text-ink transition-colors mb-4">',
+                    'before' => '<div class="text-[1.4rem] text-secondary hover:text-primary transition-colors mb-4">',
                     'after' => '</div>',
                 )));
                 ?>
@@ -210,8 +210,8 @@ function just_text_comment($comment, $args, $depth) {
 
 function just_text_post_card() {
     ?>
-    <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-line pb-24 mb-24 last:border-0'); ?>>
-        <div class="text-gray-light text-[1.5rem] mb-4">
+    <article id="post-<?php the_ID(); ?>" <?php post_class('border-b border-divider pb-24 mb-24 last:border-0'); ?>>
+        <div class="text-muted text-[1.5rem] mb-4">
             <time datetime="<?php echo get_the_date('c'); ?>">
                 <?php echo get_the_date(); ?>
             </time>
@@ -219,9 +219,9 @@ function just_text_post_card() {
 
         <h2 class="text-[2rem] md:text-[2.2rem] font-bold leading-normal mb-8">
             <?php if (is_sticky()) : ?>
-                <span class="text-[1.6rem] text-gray-text mr-3">置顶</span>
+                <span class="text-[1.6rem] text-secondary mr-3">置顶</span>
             <?php endif; ?>
-            <a href="<?php the_permalink(); ?>" class="text-ink hover:opacity-60 transition-all">
+            <a href="<?php the_permalink(); ?>" class="text-primary hover:opacity-60 transition-all">
                 <?php the_title(); ?>
             </a>
         </h2>
@@ -243,22 +243,22 @@ function just_text_post_card() {
 
                 <div>
                     <div class="flex items-center gap-3 text-[1.5rem] flex-wrap mb-4">
-                        <span class="text-gray-light">阅读约需 <?php echo just_text_reading_time(); ?> 分钟</span>
+                        <span class="text-muted">阅读约需 <?php echo just_text_reading_time(); ?> 分钟</span>
                         <?php if (has_category()) : ?>
-                            <span class="text-gray-light">·</span>
-                            <span class="text-ink [&_a]:text-ink [&_a]:hover:opacity-60 [&_a]:transition-opacity">
+                            <span class="text-muted">·</span>
+                            <span class="text-primary [&_a]:text-primary [&_a]:hover:opacity-60 [&_a]:transition-opacity">
                                 <?php the_category(' · '); ?>
                             </span>
                         <?php endif; ?>
                         <?php if (get_comments_number() > 0) : ?>
-                            <span class="text-gray-light">·</span>
-                            <a href="<?php comments_link(); ?>" class="text-gray-light hover:text-ink transition-colors">
+                            <span class="text-muted">·</span>
+                            <a href="<?php comments_link(); ?>" class="text-muted hover:text-primary transition-colors">
                                 <?php comments_number('0 评论', '1 评论', '% 评论'); ?>
                             </a>
                         <?php endif; ?>
                     </div>
 
-                    <a href="<?php the_permalink(); ?>" class="text-gray-text text-[1.7rem] border-b border-transparent hover:border-gray-text transition-all inline-block">
+                    <a href="<?php the_permalink(); ?>" class="text-secondary text-[1.7rem] border-b border-transparent hover:border-secondary transition-all inline-block">
                         查看更多 →
                     </a>
                 </div>

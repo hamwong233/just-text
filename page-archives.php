@@ -11,11 +11,11 @@ get_header(); ?>
             <?php
             $posts_count = wp_count_posts('post')->publish;
             ?>
-            <div class="text-gray-light text-[1.6rem] mb-6">
+            <div class="text-muted text-[1.6rem] mb-6">
                 共发布 <?php echo $posts_count; ?> 篇文章
             </div>
             <?php if (get_the_content()) : ?>
-                <div class="text-gray-text text-[1.6rem]">
+                <div class="text-secondary text-[1.6rem]">
                     <?php the_content(); ?>
                 </div>
             <?php endif; ?>
@@ -43,9 +43,9 @@ get_header(); ?>
                 ");
                 ?>
                 <div class="year-section mb-12">
-                    <h2 class="text-[2.4rem] font-bold mb-6 pb-4 border-b border-line">
+                    <h2 class="text-[2.4rem] font-bold mb-6 pb-4 border-b border-divider">
                         <?php echo $year_num; ?> 年
-                        <span class="text-[1.6rem] text-gray-light font-normal ml-3"><?php echo $year_posts; ?> 篇</span>
+                        <span class="text-[1.6rem] text-muted font-normal ml-3"><?php echo $year_posts; ?> 篇</span>
                     </h2>
 
                     <?php
@@ -75,7 +75,7 @@ get_header(); ?>
                         $month_query = new WP_Query($args);
                         ?>
                         <div class="month-section mb-8">
-                            <h3 class="text-[1.8rem] font-bold mb-4 text-gray-text">
+                            <h3 class="text-[1.8rem] font-bold mb-4 text-secondary">
                                 <?php echo $month_num; ?> 月
                                 <span class="text-[1.5rem] font-normal ml-2"><?php echo $month_query->post_count; ?> 篇</span>
                             </h3>
@@ -84,7 +84,7 @@ get_header(); ?>
                                 <ul class="space-y-3">
                                     <?php while ($month_query->have_posts()) : $month_query->the_post(); ?>
                                         <li class="flex items-baseline gap-4">
-                                            <time class="text-[1.5rem] text-gray-light shrink-0" datetime="<?php echo get_the_date('c'); ?>">
+                                            <time class="text-[1.5rem] text-muted shrink-0" datetime="<?php echo get_the_date('c'); ?>">
                                                 <?php echo get_the_date('m-d'); ?>
                                             </time>
                                             <a href="<?php the_permalink(); ?>" class="text-[1.6rem] hover:opacity-60 transition-opacity">
@@ -101,7 +101,7 @@ get_header(); ?>
             <?php endforeach; ?>
 
             <?php if (empty($years)) : ?>
-                <p class="text-gray-text text-[1.6rem]">暂无文章。</p>
+                <p class="text-secondary text-[1.6rem]">暂无文章。</p>
             <?php endif; ?>
         </div>
     </article>

@@ -16,11 +16,11 @@ get_header(); ?>
                 $total_posts += $tag->count;
             }
             ?>
-            <div class="text-gray-light text-[1.6rem] mb-6">
+            <div class="text-muted text-[1.6rem] mb-6">
                 共有 <?php echo $total_count; ?> 个标签，<?php echo $total_posts; ?> 篇文章
             </div>
             <?php if (get_the_content()) : ?>
-                <div class="text-gray-text text-[1.6rem]">
+                <div class="text-secondary text-[1.6rem]">
                     <?php the_content(); ?>
                 </div>
             <?php endif; ?>
@@ -39,15 +39,15 @@ get_header(); ?>
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php foreach ($tags as $tag) : ?>
                         <a href="<?php echo get_tag_link($tag->term_id); ?>"
-                           class="block p-6 border border-line hover:border-ink transition-all group">
+                           class="block p-6 border border-divider hover:border-primary transition-all group">
                             <h3 class="text-[2rem] font-bold mb-3 group-hover:opacity-60 transition-opacity">
                                 <?php echo esc_html($tag->name); ?>
                             </h3>
-                            <div class="text-gray-light text-[1.5rem]">
+                            <div class="text-muted text-[1.5rem]">
                                 <?php echo $tag->count; ?> 篇文章
                             </div>
                             <?php if ($tag->description) : ?>
-                                <p class="text-gray-text text-[1.5rem] mt-3 line-clamp-2">
+                                <p class="text-secondary text-[1.5rem] mt-3 line-clamp-2">
                                     <?php echo esc_html($tag->description); ?>
                                 </p>
                             <?php endif; ?>
@@ -55,7 +55,7 @@ get_header(); ?>
                     <?php endforeach; ?>
                 </div>
             <?php else : ?>
-                <p class="text-gray-text text-[1.6rem]">暂无标签。</p>
+                <p class="text-secondary text-[1.6rem]">暂无标签。</p>
             <?php endif; ?>
         </div>
     </article>
