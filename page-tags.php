@@ -8,6 +8,17 @@ get_header(); ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
         <header class="mb-16">
             <h1 class="text-[2.8rem] font-bold leading-normal mb-6"><?php the_title(); ?></h1>
+            <?php
+            $tags = get_tags(array('hide_empty' => true));
+            $total_count = count($tags);
+            $total_posts = 0;
+            foreach ($tags as $tag) {
+                $total_posts += $tag->count;
+            }
+            ?>
+            <div class="text-gray-light text-[1.6rem] mb-6">
+                共有 <?php echo $total_count; ?> 个标签，<?php echo $total_posts; ?> 篇文章
+            </div>
             <?php if (get_the_content()) : ?>
                 <div class="text-gray-text text-[1.6rem]">
                     <?php the_content(); ?>
@@ -25,7 +36,7 @@ get_header(); ?>
 
             if ($tags) :
                 ?>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php foreach ($tags as $tag) : ?>
                         <a href="<?php echo get_tag_link($tag->term_id); ?>"
                            class="block p-6 border border-line hover:border-ink transition-all group">

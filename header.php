@@ -379,6 +379,12 @@
             background-color: rgba(0, 0, 0, 0.02);
         }
     </style>
+    <?php
+    $custom_header_js = get_theme_mod('custom_header_js');
+    if ($custom_header_js) {
+        echo wp_unslash($custom_header_js);
+    }
+    ?>
     <?php wp_head(); ?>
 </head>
 <body class="bg-paper text-ink leading-relaxed tracking-wide p-5" style="font-size: 1.7rem; line-height: 1.85; letter-spacing: 0.02em;">
@@ -406,12 +412,8 @@
     </h1>
     <?php
     $description = get_bloginfo('description', 'display');
-    $subtitle = get_theme_mod('site_subtitle');
     if ($description || is_customize_preview()) : ?>
         <p class="text-gray-text text-[1.6rem] leading-normal mt-2"><?php echo $description; ?></p>
-    <?php endif; ?>
-    <?php if ($subtitle) : ?>
-        <p class="text-gray-light text-[1.7rem] leading-normal mt-2"><?php echo esc_html($subtitle); ?></p>
     <?php endif; ?>
 </header>
 <?php endif; ?>

@@ -31,18 +31,6 @@ function just_text_customize_register($wp_customize) {
         'priority' => 30,
     ));
 
-    $wp_customize->add_setting('site_subtitle', array(
-        'default' => '',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-
-    $wp_customize->add_control('site_subtitle', array(
-        'label' => '网站副标题',
-        'description' => '输入网站副标题',
-        'section' => 'just_text_settings',
-        'type' => 'text',
-    ));
-
     $wp_customize->add_setting('icp_filing_number', array(
         'default' => '',
         'sanitize_callback' => 'sanitize_text_field',
@@ -54,8 +42,27 @@ function just_text_customize_register($wp_customize) {
         'section' => 'just_text_settings',
         'type' => 'text',
     ));
+
+    $wp_customize->add_setting('custom_header_js', array(
+        'default' => '',
+        'sanitize_callback' => 'just_text_sanitize_js',
+    ));
+
+    $wp_customize->add_control('custom_header_js', array(
+        'label' => '自定义头部 JS',
+        'description' => '在 &lt;head&gt; 标签中插入自定义 JavaScript 代码',
+        'section' => 'just_text_settings',
+        'type' => 'textarea',
+    ));
 }
 add_action('customize_register', 'just_text_customize_register');
+
+function just_text_sanitize_js($input) {
+    if (current_user_can('unfiltered_html')) {
+        return $input;
+    }
+    return wp_kses_post($input);
+}
 
 function just_text_nav_menu_css_class($classes, $item, $args, $depth) {
     if ($args->theme_location == 'primary') {
@@ -99,15 +106,6 @@ function just_text_remove_block_comments($content) {
     return $content;
 }
 add_filter('the_content', 'just_text_remove_block_comments', 9);
-
-function just_text_document_title_parts($title) {
-    $subtitle = get_theme_mod('site_subtitle');
-    if ($subtitle && (is_home() || is_front_page())) {
-        $title['title'] = $title['title'] . ' - ' . $subtitle;
-    }
-    return $title;
-}
-add_filter('document_title_parts', 'just_text_document_title_parts');
 
 function just_text_reading_time() {
     $content = get_post_field('post_content', get_the_ID());
@@ -201,48 +199,52 @@ function just_text_post_card() {
             </a>
         </h2>
 
-        <div class="flex flex-col md:flex-row gap-8 mb-8">
-            <div class="flex-1 leading-relaxed text-[1.8rem] line-clamp-6 order-1">
-                <?php
-                if (has_excerpt()) {
-                    echo get_the_excerpt();
-                } else {
-                    $content = get_the_content();
-                    $content = strip_shortcodes($content);
-                    $content = wp_strip_all_tags($content);
-                    echo mb_substr($content, 0, 200, 'UTF-8') . '...';
-                }
-                ?>
+        <div class="flex gap-8 mb-8">
+            <div class="flex-1 min-w-0 flex flex-col justify-between">
+                <div class="leading-relaxed text-[1.8rem] line-clamp-3 md:line-clamp-6 mb-4">
+                    <?php
+                    if (has_excerpt()) {
+                        echo get_the_excerpt();
+                    } else {
+                        $content = get_the_content();
+                        $content = strip_shortcodes($content);
+                        $content = wp_strip_all_tags($content);
+                        echo mb_substr($content, 0, 200, 'UTF-8') . '...';
+                    }
+                    ?>
+                </div>
+
+                <div>
+                    <div class="flex items-center gap-3 text-[1.5rem] flex-wrap mb-4">
+                        <span class="text-gray-light">阅读约需 <?php echo just_text_reading_time(); ?> 分钟</span>
+                        <?php if (has_category()) : ?>
+                            <span class="text-gray-light">·</span>
+                            <span class="text-ink [&_a]:text-ink [&_a]:hover:opacity-60 [&_a]:transition-opacity">
+                                <?php the_category(' · '); ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if (get_comments_number() > 0) : ?>
+                            <span class="text-gray-light">·</span>
+                            <a href="<?php comments_link(); ?>" class="text-gray-light hover:text-ink transition-colors">
+                                <?php comments_number('0 评论', '1 评论', '% 评论'); ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <a href="<?php the_permalink(); ?>" class="text-gray-text text-[1.7rem] border-b border-transparent hover:border-gray-text transition-all inline-block">
+                        查看更多 →
+                    </a>
+                </div>
             </div>
 
             <?php if (has_post_thumbnail()) : ?>
-                <div class="flex-shrink-0 w-full md:w-64 md:h-64 overflow-hidden order-3 md:order-2">
+                <div class="flex-shrink-0 w-[140px] h-[140px] md:w-[256px] md:h-[256px] overflow-hidden">
                     <a href="<?php the_permalink(); ?>" class="block w-full h-full">
                         <?php the_post_thumbnail('large', array('class' => 'w-full h-full object-cover hover:opacity-90 transition-opacity')); ?>
                     </a>
                 </div>
             <?php endif; ?>
         </div>
-
-        <div class="flex items-center gap-3 text-[1.5rem] flex-wrap">
-            <span class="text-gray-light">阅读约需 <?php echo just_text_reading_time(); ?> 分钟</span>
-            <?php if (has_category()) : ?>
-                <span class="text-gray-light">·</span>
-                <span class="text-ink [&_a]:text-ink [&_a]:hover:opacity-60 [&_a]:transition-opacity">
-                    <?php the_category(' · '); ?>
-                </span>
-            <?php endif; ?>
-            <?php if (get_comments_number() > 0) : ?>
-                <span class="text-gray-light">·</span>
-                <a href="<?php comments_link(); ?>" class="text-gray-light hover:text-ink transition-colors">
-                    <?php comments_number('0 评论', '1 评论', '% 评论'); ?>
-                </a>
-            <?php endif; ?>
-        </div>
-
-        <a href="<?php the_permalink(); ?>" class="text-gray-text text-[1.7rem] border-b border-transparent hover:border-gray-text transition-all inline-block mt-4">
-            查看更多 →
-        </a>
     </article>
     <?php
 }

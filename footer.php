@@ -1,5 +1,11 @@
 </main>
 
+<div class="max-w-6xl mx-auto text-center mb-8">
+    <a href="#" id="back-to-top" class="text-gray-text text-[1.6rem] border-b border-transparent hover:text-ink hover:border-ink transition-all inline-block">
+        ↑ 回到顶部
+    </a>
+</div>
+
 <footer class="max-w-6xl mx-auto mt-16 pt-16 border-t border-line text-center text-gray-text text-[1.5rem] leading-normal">
     <p class="mb-2">&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. 保留所有权利。</p>
     <?php
@@ -19,6 +25,16 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const backToTop = document.getElementById('back-to-top');
+
+    backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
     const preview = document.getElementById('image-preview');
     const previewImg = document.getElementById('preview-image');
     const contentImages = document.querySelectorAll('.prose-content img');
