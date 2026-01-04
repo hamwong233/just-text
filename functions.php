@@ -119,6 +119,16 @@ function just_text_remove_thumbnail_dimensions($html) {
 }
 add_filter('post_thumbnail_html', 'just_text_remove_thumbnail_dimensions', 10);
 
+function just_text_add_lazy_loading($content) {
+    if (is_feed() || is_admin()) {
+        return $content;
+    }
+    $content = preg_replace('/<img(.*?)src=/i', '<img$1loading="lazy" src=', $content);
+    return $content;
+}
+add_filter('the_content', 'just_text_add_lazy_loading', 20);
+add_filter('post_thumbnail_html', 'just_text_add_lazy_loading', 20);
+
 function just_text_pagination() {
     global $wp_query;
 

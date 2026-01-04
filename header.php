@@ -350,6 +350,11 @@
             height: auto;
             margin: 2rem 0;
             border-radius: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .prose-content img:hover {
+            opacity: 0.8;
         }
 
         .prose-content figure {
