@@ -61,6 +61,12 @@ get_header(); ?>
                 });
             }
 
+            usort($categories, function($a, $b) {
+                $count_a = just_text_get_category_post_count($a->term_id);
+                $count_b = just_text_get_category_post_count($b->term_id);
+                return $count_b - $count_a;
+            });
+
             if ($categories) :
                 ?>
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -61,6 +61,10 @@ get_header(); ?>
                 });
             }
 
+            usort($tags, function($a, $b) {
+                return $b->count - $a->count;
+            });
+
             if ($tags) :
                 ?>
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
