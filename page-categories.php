@@ -71,7 +71,7 @@ get_header(); ?>
                                 <?php echo esc_html($category->name); ?>
                             </h3>
                             <div class="text-muted text-[1.5rem]">
-                                <?php echo $category->count; ?> 篇文章
+                                <?php echo just_text_get_category_post_count($category->term_id); ?> 篇文章
                             </div>
                             <?php if ($category->description) : ?>
                                 <p class="text-secondary text-[1.5rem] mt-3 line-clamp-2">

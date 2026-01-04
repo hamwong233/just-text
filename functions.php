@@ -386,6 +386,32 @@ function just_text_post_card() {
 }
 
 /**
+ * 获取分类及其所有子分类的文章总数
+ *
+ * @param int $category_id 分类 ID
+ * @return int 文章总数
+ */
+function just_text_get_category_post_count($category_id) {
+    $count = 0;
+    $category = get_category($category_id);
+
+    if ($category) {
+        $count = $category->count;
+
+        $children = get_categories(array(
+            'parent' => $category_id,
+            'hide_empty' => false,
+        ));
+
+        foreach ($children as $child) {
+            $count += just_text_get_category_post_count($child->term_id);
+        }
+    }
+
+    return $count;
+}
+
+/**
  * 获取字符串首字母（支持中英文）
  *
  * @param string $str 输入字符串
