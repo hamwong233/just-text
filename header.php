@@ -3,7 +3,8 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss-cdn@3.4.1/tailwindcss.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -297,23 +298,27 @@
         }
 
         .prose-content pre {
-            background-color: #222;
-            color: #ffecaa;
             font-size: 1.5rem;
             margin: 2rem 0;
             padding: 1.5rem;
             border-radius: 0.5rem;
             line-height: 1.8;
             overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            overflow-y: auto;
+            max-height: 500px;
             position: relative;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .prose-content pre::-webkit-scrollbar {
+            display: none;
         }
 
         .code-copy-btn {
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+            top: 1rem;
+            right: 1rem;
             background-color: rgba(255, 255, 255, 0.1);
             color: #ffecaa;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -322,6 +327,7 @@
             font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.2s;
+            z-index: 10;
         }
 
         .code-copy-btn:hover {

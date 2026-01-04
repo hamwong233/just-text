@@ -95,6 +95,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const codeBlocks = document.querySelectorAll('.prose-content pre');
     codeBlocks.forEach(block => {
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative';
+        block.parentNode.insertBefore(wrapper, block);
+        wrapper.appendChild(block);
+
         const button = document.createElement('button');
         button.className = 'code-copy-btn';
         button.textContent = '复制';
@@ -109,7 +114,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 2000);
             });
         });
-        block.appendChild(button);
+        wrapper.appendChild(button);
+    });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.prose-content pre code').forEach((block) => {
+        hljs.highlightElement(block);
     });
 });
 </script>
