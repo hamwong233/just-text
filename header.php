@@ -72,7 +72,7 @@
         }
 
         ::selection {
-            background: #ffecaa;
+            background: <?php echo $is_dark ? 'rgba(255, 255, 255, 0.2)' : '#ffecaa'; ?>;
             color: var(--primary);
         }
 
