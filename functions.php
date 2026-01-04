@@ -54,6 +54,23 @@ function just_text_customize_register($wp_customize) {
         'section' => 'just_text_settings',
         'type' => 'textarea',
     ));
+
+    $wp_customize->add_setting('theme_mode', array(
+        'default' => 'light',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('theme_mode', array(
+        'label' => '主题模式',
+        'description' => '选择日间、夜间或跟随系统时间自动切换',
+        'section' => 'just_text_settings',
+        'type' => 'select',
+        'choices' => array(
+            'light' => '日间模式',
+            'dark' => '夜间模式',
+            'auto' => '自动切换（6:00-18:00 日间）',
+        ),
+    ));
 }
 add_action('customize_register', 'just_text_customize_register');
 

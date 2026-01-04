@@ -6,16 +6,34 @@
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss-cdn@3.4.1/tailwindcss.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
     <script>
+        const themeMode = '<?php echo get_theme_mod('theme_mode', 'light'); ?>';
+        let isDark = false;
+
+        if (themeMode === 'dark') {
+            isDark = true;
+        } else if (themeMode === 'auto') {
+            const hour = new Date().getHours();
+            isDark = hour < 6 || hour >= 18;
+        }
+
+        const colors = isDark ? {
+            'surface': '#1a1a1a',
+            'primary': '#e8e8e8',
+            'secondary': '#999',
+            'muted': '#666',
+            'divider': '#333',
+        } : {
+            'surface': '#FAF8F1',
+            'primary': '#161616',
+            'secondary': '#888',
+            'muted': '#aaa',
+            'divider': '#eee',
+        };
+
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        'surface': '#FAF8F1',
-                        'primary': '#161616',
-                        'secondary': '#888',
-                        'muted': '#aaa',
-                        'divider': '#eee',
-                    },
+                    colors: colors,
                     fontSize: {
                         'base': '1.7rem',
                     }
@@ -25,11 +43,21 @@
     </script>
     <style>
         :root {
-            --surface: #FAF8F1;
-            --primary: #161616;
-            --secondary: #888;
-            --muted: #aaa;
-            --divider: #eee;
+            --surface: <?php
+                $mode = get_theme_mod('theme_mode', 'light');
+                $is_dark = false;
+                if ($mode === 'dark') {
+                    $is_dark = true;
+                } else if ($mode === 'auto') {
+                    $hour = date('G');
+                    $is_dark = $hour < 6 || $hour >= 18;
+                }
+                echo $is_dark ? '#1a1a1a' : '#FAF8F1';
+            ?>;
+            --primary: <?php echo $is_dark ? '#e8e8e8' : '#161616'; ?>;
+            --secondary: <?php echo $is_dark ? '#999' : '#888'; ?>;
+            --muted: <?php echo $is_dark ? '#666' : '#aaa'; ?>;
+            --divider: <?php echo $is_dark ? '#333' : '#eee'; ?>;
         }
 
         html {
@@ -326,9 +354,9 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: var(--surface);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--divider);
+            color: var(--primary);
+            border: 1px solid var(--divider);
             padding: 0.4rem 0.8rem;
             border-radius: 0.25rem;
             font-size: 1.3rem;
@@ -338,7 +366,7 @@
         }
 
         .code-copy-btn:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0.7;
         }
 
         .code-copy-btn.copied {
