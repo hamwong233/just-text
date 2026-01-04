@@ -26,24 +26,7 @@ get_header(); ?>
             <?php endif; ?>
         </header>
 
-        <div class="letter-filter mb-12">
-            <div class="flex flex-wrap gap-3">
-                <?php
-                $letters = range('A', 'Z');
-                $current_letter = isset($_GET['letter']) ? strtoupper($_GET['letter']) : '';
-                foreach ($letters as $letter) :
-                    $is_active = ($current_letter === $letter);
-                    $class = $is_active
-                        ? 'px-4 py-2 text-[1.5rem] bg-primary text-white transition-all'
-                        : 'px-4 py-2 text-[1.5rem] border border-divider hover:border-primary transition-all';
-                    $url = $is_active ? remove_query_arg('letter') : add_query_arg('letter', $letter);
-                    ?>
-                    <a href="<?php echo esc_url($url); ?>" class="<?php echo $class; ?>">
-                        <?php echo $letter; ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
+        <?php just_text_letter_filter(); ?>
 
         <div class="tags-overview">
             <?php

@@ -412,6 +412,31 @@ function just_text_get_category_post_count($category_id) {
 }
 
 /**
+ * 输出字母筛选器
+ */
+function just_text_letter_filter() {
+    $letters = range('A', 'Z');
+    $current_letter = isset($_GET['letter']) ? strtoupper($_GET['letter']) : '';
+    ?>
+    <div class="letter-filter mb-12">
+        <div class="flex flex-wrap gap-3">
+            <?php foreach ($letters as $letter) :
+                $is_active = ($current_letter === $letter);
+                $class = $is_active
+                    ? 'w-14 h-14 flex items-center justify-center text-[1.5rem] bg-primary text-white transition-all'
+                    : 'w-14 h-14 flex items-center justify-center text-[1.5rem] border border-divider hover:border-primary transition-all';
+                $url = $is_active ? remove_query_arg('letter') : add_query_arg('letter', $letter);
+                ?>
+                <a href="<?php echo esc_url($url); ?>" class="<?php echo $class; ?>">
+                    <?php echo $letter; ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+}
+
+/**
  * 获取字符串首字母（支持中英文）
  *
  * @param string $str 输入字符串
