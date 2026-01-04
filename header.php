@@ -40,15 +40,16 @@
         }
 
         .prose-content > *:first-child {
-            @apply mt-0;
+            margin-top: 0;
         }
 
         .prose-content > *:last-child {
-            @apply mb-0;
+            margin-bottom: 0;
         }
 
         .prose-content p {
-            @apply leading-relaxed mb-6;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
         }
 
         .prose-content > p:empty {
@@ -60,32 +61,42 @@
         .prose-content h3,
         .prose-content h4,
         .prose-content h5,
-        .prose-content h6 {
-            @apply leading-tight font-bold clear-both;
+        .prose-content h6,
+        .prose-content .wp-block-heading {
+            line-height: 1.3;
+            font-weight: 700;
+            clear: both;
             margin: 40px 0 24px;
             letter-spacing: 0.02em;
         }
 
         .prose-content h1:first-child,
         .prose-content h2:first-child,
-        .prose-content h3:first-child {
+        .prose-content h3:first-child,
+        .prose-content .wp-block-heading:first-child {
             margin-top: 0;
         }
 
-        .prose-content h1 { @apply text-[2.6rem]; }
-        .prose-content h2 { @apply text-[2.2rem]; }
-        .prose-content h3 { @apply text-[2rem]; }
-        .prose-content h4 { @apply text-[1.8rem]; }
+        .prose-content h1 { font-size: 2.6rem; }
+        .prose-content h2 { font-size: 2.2rem; }
+        .prose-content h3 { font-size: 2rem; }
+        .prose-content h4 { font-size: 1.8rem; }
         .prose-content h5,
-        .prose-content h6 { @apply text-[1.6rem]; }
+        .prose-content h6 { font-size: 1.6rem; }
 
         .prose-content a {
-            @apply border-b border-current hover:opacity-60 transition-opacity;
+            border-bottom: 1px solid currentColor;
+            transition: opacity 0.2s;
+        }
+
+        .prose-content a:hover {
+            opacity: 0.6;
         }
 
         .prose-content ul,
         .prose-content ol {
-            @apply my-6 ml-6;
+            margin: 1.5rem 0;
+            margin-left: 1.5rem;
         }
 
         .prose-content ul {
@@ -97,187 +108,279 @@
         }
 
         .prose-content li {
-            @apply leading-relaxed my-2;
+            line-height: 1.8;
+            margin: 0.5rem 0;
             padding-left: 0.5em;
         }
 
         .prose-content li > p {
-            @apply my-2;
+            margin: 0.5rem 0;
         }
 
         .prose-content ul ul,
         .prose-content ol ol,
         .prose-content ul ol,
         .prose-content ol ul {
-            @apply my-2;
+            margin: 0.5rem 0;
         }
 
         .prose-content blockquote {
-            @apply bg-[#fbf3e7] border-l-4 border-[#dcbb85] my-8 px-6 py-5 rounded-r;
+            background-color: #fbf3e7;
+            border-left: 4px solid #dcbb85;
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 0.25rem 0.25rem 0;
         }
 
         .prose-content blockquote p {
-            @apply mb-4;
+            margin-bottom: 1rem;
         }
 
         .prose-content blockquote p:last-child {
-            @apply mb-0;
+            margin-bottom: 0;
         }
 
         .prose-content strong,
         .prose-content b {
-            @apply font-bold;
+            font-weight: 700;
         }
 
         .prose-content em,
         .prose-content i {
-            @apply italic;
+            font-style: italic;
         }
 
         .prose-content del,
         .prose-content s {
-            @apply line-through;
+            text-decoration: line-through;
         }
 
         .prose-content mark {
-            @apply bg-[#ffecaa] px-1;
+            background-color: #ffecaa;
+            padding: 0 0.25rem;
         }
 
         .prose-content small {
-            @apply text-[1.4rem];
+            font-size: 1.4rem;
         }
 
         .prose-content sub,
         .prose-content sup {
-            @apply text-[1.2rem];
+            font-size: 1.2rem;
         }
 
         .prose-content abbr {
-            @apply border-b border-dotted border-current cursor-help;
+            border-bottom: 1px dotted currentColor;
+            cursor: help;
         }
 
         .prose-content kbd {
-            @apply bg-black/10 px-2 py-1 rounded text-[1.4rem] border border-black/20;
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 1.4rem;
+            border: 1px solid rgba(0, 0, 0, 0.2);
             font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
         }
 
         .prose-content dl {
-            @apply my-6;
+            margin: 1.5rem 0;
         }
 
         .prose-content dt {
-            @apply font-bold mt-4 first:mt-0;
+            font-weight: 700;
+            margin-top: 1rem;
         }
 
-        .prose-content dd {
-            @apply ml-6 mt-2;
-        }
-
-        .prose-content .wp-block-heading {
-            @apply leading-tight font-bold clear-both;
-            margin: 40px 0 24px;
-            letter-spacing: 0.02em;
-        }
-
-        .prose-content .wp-block-heading:first-child {
+        .prose-content dt:first-child {
             margin-top: 0;
         }
 
+        .prose-content dd {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .prose-content figure {
+            margin: 2rem 0;
+        }
+
+        .prose-content figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            display: block;
+        }
+
         .prose-content figure.wp-block-image {
-            @apply my-8 mx-0;
+            margin: 2rem 0;
         }
 
         .prose-content figure.wp-block-image img {
-            @apply w-full h-auto rounded-lg block;
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            display: block;
         }
 
         .prose-content figure.wp-block-image.size-full img,
         .prose-content figure.wp-block-image.size-large img {
-            @apply max-w-full;
+            max-width: 100%;
         }
 
+        .prose-content figure figcaption,
         .prose-content .wp-block-image figcaption {
-            @apply text-gray-light text-[1.5rem] text-center mt-3;
+            color: #aaa;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 0.75rem;
         }
 
         .prose-content .wp-block-quote {
-            @apply bg-[#fbf3e7] border-l-4 border-[#dcbb85] my-8 px-6 py-5 rounded-r;
+            background-color: #fbf3e7;
+            border-left: 4px solid #dcbb85;
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 0.25rem 0.25rem 0;
         }
 
         .prose-content .wp-block-code {
-            @apply bg-[#222] text-[#ffecaa] text-[1.5rem] my-8 p-6 rounded-lg leading-relaxed overflow-x-auto;
+            background-color: #222;
+            color: #ffecaa;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            line-height: 1.8;
+            overflow-x: auto;
         }
 
         .prose-content .wp-block-table {
-            @apply my-8;
+            margin: 2rem 0;
         }
 
         .prose-content .wp-block-table table {
-            @apply w-full border-collapse;
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .prose-content .wp-block-gallery {
-            @apply my-8 grid gap-4;
+            margin: 2rem 0;
+            display: grid;
+            gap: 1rem;
         }
 
         .prose-content .wp-block-gallery.columns-2 {
-            @apply grid-cols-2;
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .prose-content .wp-block-gallery.columns-3 {
-            @apply grid-cols-3;
+            grid-template-columns: repeat(3, 1fr);
         }
 
         .prose-content .wp-block-gallery.columns-4 {
-            @apply grid-cols-4;
+            grid-template-columns: repeat(4, 1fr);
         }
 
         .prose-content hr {
-            @apply border-0 border-t border-line my-12;
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 3rem 0;
         }
 
         .prose-content code {
-            @apply bg-black/10 px-1.5 py-0.5 rounded text-[1.5rem];
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 1.5rem;
             font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
         }
 
         .prose-content pre {
-            @apply bg-[#222] text-[#ffecaa] text-[1.5rem] my-8 p-6 rounded-lg leading-relaxed overflow-x-auto;
+            background-color: #222;
+            color: #ffecaa;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            line-height: 1.8;
+            overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
 
         .prose-content pre code {
-            @apply bg-transparent p-0 text-[1.5rem];
+            background-color: transparent;
+            padding: 0;
+            font-size: 1.5rem;
         }
 
         .prose-content img {
-            @apply max-w-full h-auto my-8 rounded-lg;
+            max-width: 100%;
+            height: auto;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
         }
 
         .prose-content figure {
-            @apply my-8;
+            margin: 2rem 0;
         }
 
         .prose-content figcaption {
-            @apply text-gray-light text-[1.5rem] text-center mt-3;
+            color: #aaa;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 0.75rem;
         }
 
         .prose-content table {
-            @apply w-full my-8 border-collapse;
+            width: 100%;
+            margin: 2rem 0;
+            border-collapse: collapse;
         }
 
         .prose-content th,
         .prose-content td {
-            @apply border border-line px-4 py-3 text-left;
+            border: 1px solid #eee;
+            padding: 0.75rem 1rem;
+            text-align: left;
         }
 
         .prose-content th {
-            @apply bg-black/5 font-bold;
+            background-color: rgba(0, 0, 0, 0.05);
+            font-weight: 700;
         }
 
         .prose-content tbody tr:nth-child(even) {
-            @apply bg-black/[0.02];
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .posts article > div {
+                flex-direction: column !important;
+            }
+
+            .posts article .flex-1,
+            .posts article .w-80 {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .posts article .w-80 {
+                margin-top: 1.5rem;
+            }
+
+            .posts article h2 {
+                font-size: 2rem;
+            }
+
+            header h1 {
+                font-size: 2.4rem;
+            }
         }
     </style>
     <?php wp_head(); ?>
