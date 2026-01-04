@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html lang="zh-CN">
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -307,6 +307,30 @@
             overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
+            position: relative;
+        }
+
+        .code-copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffecaa;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.25rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .code-copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .code-copy-btn.copied {
+            background-color: rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.5);
         }
 
         .prose-content pre code {
@@ -354,34 +378,6 @@
         .prose-content tbody tr:nth-child(even) {
             background-color: rgba(0, 0, 0, 0.02);
         }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-
-            .posts article > div {
-                flex-direction: column !important;
-            }
-
-            .posts article .flex-1,
-            .posts article .w-80 {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .posts article .w-80 {
-                margin-top: 1.5rem;
-            }
-
-            .posts article h2 {
-                font-size: 2rem;
-            }
-
-            header h1 {
-                font-size: 2.4rem;
-            }
-        }
     </style>
     <?php wp_head(); ?>
 </head>
@@ -389,7 +385,7 @@
 <?php wp_body_open(); ?>
 
 <?php if (has_nav_menu('primary')) : ?>
-    <nav class="max-w-5xl mx-auto py-4 mb-20">
+    <nav class="max-w-6xl mx-auto py-4 mb-20">
         <?php
         wp_nav_menu(array(
             'theme_location' => 'primary',
@@ -402,18 +398,22 @@
 <?php endif; ?>
 
 <?php if (is_home() || is_front_page()) : ?>
-<header class="max-w-5xl mx-auto mb-20">
-    <h1 class="text-[2.8rem] font-bold leading-normal mb-3">
+<header class="max-w-6xl mx-auto mb-20">
+    <h1 class="text-[2.4rem] md:text-[2.8rem] font-bold leading-normal mb-3">
         <a href="<?php echo esc_url(home_url('/')); ?>" class="text-ink hover:opacity-60 transition-all">
             <?php bloginfo('name'); ?>
         </a>
     </h1>
     <?php
     $description = get_bloginfo('description', 'display');
+    $subtitle = get_theme_mod('site_subtitle');
     if ($description || is_customize_preview()) : ?>
         <p class="text-gray-text text-[1.6rem] leading-normal mt-2"><?php echo $description; ?></p>
+    <?php endif; ?>
+    <?php if ($subtitle) : ?>
+        <p class="text-gray-light text-[1.7rem] leading-normal mt-2"><?php echo esc_html($subtitle); ?></p>
     <?php endif; ?>
 </header>
 <?php endif; ?>
 
-<main class="max-w-5xl mx-auto mb-16">
+<main class="max-w-6xl mx-auto mb-16">
