@@ -211,7 +211,7 @@ function just_text_post_card() {
 
         <div class="flex gap-8 mb-8">
             <div class="flex-1 min-w-0 flex flex-col justify-between">
-                <div class="leading-relaxed text-[1.8rem] line-clamp-3 md:line-clamp-6 mb-4">
+                <div class="leading-relaxed text-[1.7rem] line-clamp-3 md:line-clamp-6 mb-4">
                     <?php
                     if (has_excerpt()) {
                         echo get_the_excerpt();
