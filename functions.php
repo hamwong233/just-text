@@ -423,7 +423,7 @@ function just_text_letter_filter() {
             <?php foreach ($letters as $letter) :
                 $is_active = ($current_letter === $letter);
                 $class = $is_active
-                    ? 'w-14 h-14 flex items-center justify-center text-[1.5rem] bg-primary text-white transition-all'
+                    ? 'w-14 h-14 flex items-center justify-center text-[1.5rem] bg-primary text-surface transition-all'
                     : 'w-14 h-14 flex items-center justify-center text-[1.5rem] border border-divider hover:border-primary transition-all';
                 $url = $is_active ? remove_query_arg('letter') : add_query_arg('letter', $letter);
                 ?>
